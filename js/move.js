@@ -1,29 +1,18 @@
 /**
  * @author Xushuai
  */
-window.onload = function() {
-	var divs = document.getElementsByTagName('div');
-	for (var i = 0; i < divs.length; i++) {
-		//初始化所有div
-		divs[i].timer = null;
-	    new MoveDiv(divs[i],"width");
-	}
-};
-
-function MoveDiv(div, attr, target) {
+function MoveAction(div, attr, target) {
 	//构造函数
 	this.div = div;
 	this.attr = attr;
 	this.moveTo = target || 350;
-	//this.initOffsetWidth = this.div.offsetWidth;
-	this.initStyle = parseInt(this.getStyle());
+	//特殊处理淡入淡出效果
+	this.initStyle = attr == "opacity" ? parseInt(parseFloat(this.getStyle())*100) : parseInt(this.getStyle());
 	//为该对象增加运动事件
 	this.startMove();
 }
 
-
-
-MoveDiv.prototype.startMove = function() {
+MoveAction.prototype.startMove = function() {
 	var _this = this;
 	_this.div.onmouseover = function() {
 		_this.move(_this.moveTo);
@@ -34,26 +23,36 @@ MoveDiv.prototype.startMove = function() {
 	};
 };
 
-MoveDiv.prototype.move = function(target) {
+MoveAction.prototype.move = function(target) {
 	var _this = this;
 	clearInterval(_this.div.timer);
 
 	_this.div.timer = setInterval(function() {
-		var iCur = parseInt(_this.getStyle());
+		var iCur = 0;
+		if(_this.attr == 'opacity'){
+			iCur = parseInt(parseFloat(_this.getStyle())*100);
+		} else {
+			iCur = parseInt(_this.getStyle());
+		}
 		var speed = (target - iCur) / 8;
 		speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
 		if (iCur == target) {
 			clearInterval(_this.div.timer);
 		} else {
-			_this.div.style[_this.attr] = iCur + speed + "px";
+			if(_this.attr=='opacity'){
+				_this.div.style.filter='alpha(opacity:'+(iCur+speed)+')';
+				_this.div.style.opacity=(iCur+speed)/100;
+			} else {
+				_this.div.style[_this.attr] = iCur + speed + "px";
+			}
 		}
 	}, 30);
 };
 
-MoveDiv.prototype.getStyle = function () {
-		if(this.div.currentStyle){
-			return this.div.currentStyle[this.attr];
-		} else {
-			return getComputedStyle(this.div, false)[this.attr];
-		}
-};
+MoveAction.prototype.getStyle = function() {
+	if (this.div.currentStyle) {
+		return this.div.currentStyle[this.attr];
+	} else {
+		return getComputedStyle(this.div, false)[this.attr];
+	}
+}; 
