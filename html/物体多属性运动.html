@@ -20,27 +20,24 @@
 		</style>
 		<script type="text/javascript">
 			window.onload = function() {
-				var divs = document.getElementsByTagName('div');
-				var action = null;
-				for (var i = 0; i < divs.length; i++) {
-					//初始化所有div
-					divs[i].timer = null;
-					action = new MoveAction(divs[i]);
-					divs[i].onmousemove = function() {
-						action.move("opacity", 100);
-					};
-					divs[i].onmouseout = function () {
-						action.move("opacity", 30);
-					};
-				}
+				var div = document.getElementById('div1');
+				var action = new MoveAction(div);
+				div.onmousemove = function() {
+					action.move('width', 300, function(){
+						action.move('height', 300);
+					});
+				};
+				
+				div.onmouseout = function() {
+					action.move('height', 20, function(){
+						action.move('width', 150);
+					});
+				};
 			};
 		</script>
 	</head>
 	<body>
 		<div id="div1"> </div>
-		<div id="div2"> </div>
-		<div id="div3"> </div>
-		<div id="div4"> </div>
 	</body>
 </html>
 

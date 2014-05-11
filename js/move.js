@@ -1,29 +1,16 @@
 /**
  * @author Xushuai
  */
-function MoveAction(div, attr, target) {
+function MoveAction(div) {
 	//构造函数
 	this.div = div;
-	this.attr = attr;
-	this.moveTo = target || 350;
-	//特殊处理淡入淡出效果
-	this.initStyle = attr == "opacity" ? parseInt(parseFloat(this.getStyle())*100) : parseInt(this.getStyle());
-	//为该对象增加运动事件
-	this.startMove();
 }
 
-MoveAction.prototype.startMove = function() {
-	var _this = this;
-	_this.div.onmouseover = function() {
-		_this.move(_this.moveTo);
-	};
+MoveAction.prototype.move = function(attr, target, callback) {
+	this.attr = attr;
+	this.moveTo = target || 350;
+	this.moveTo = attr == "opacity" ? parseInt(parseFloat(this.getStyle())*100) : parseInt(this.getStyle());
 
-	_this.div.onmouseout = function() {
-		_this.move(_this.initStyle);
-	};
-};
-
-MoveAction.prototype.move = function(target) {
 	var _this = this;
 	clearInterval(_this.div.timer);
 
@@ -38,6 +25,9 @@ MoveAction.prototype.move = function(target) {
 		speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
 		if (iCur == target) {
 			clearInterval(_this.div.timer);
+			if(callback != null){
+				callback();
+			}
 		} else {
 			if(_this.attr=='opacity'){
 				_this.div.style.filter='alpha(opacity:'+(iCur+speed)+')';
@@ -56,3 +46,4 @@ MoveAction.prototype.getStyle = function() {
 		return getComputedStyle(this.div, false)[this.attr];
 	}
 }; 
+
