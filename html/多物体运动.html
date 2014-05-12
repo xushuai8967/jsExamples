@@ -13,7 +13,7 @@
 				background-color:red;
 				width:150px;
 				height:20px;
-				margin-top:10px;
+				margin-top:5px;
 				filter:alpha(opacity=30);
 				opacity:0.3;
 			}
@@ -21,16 +21,13 @@
 		<script type="text/javascript">
 			window.onload = function() {
 				var divs = document.getElementsByTagName('div');
-				var action = null;
-				for (var i = 0; i < divs.length; i++) {
-					//初始化所有div
-					divs[i].timer = null;
-					action = new MoveAction(divs[i]);
+				var i;
+				for (i = 0; i < divs.length; i++) {
 					divs[i].onmousemove = function() {
-						action.move("opacity", 100);
+						startMove(this,{"width": 300});
 					};
 					divs[i].onmouseout = function () {
-						action.move("opacity", 30);
+						startMove(this,{"width": 150});
 					};
 				}
 			};

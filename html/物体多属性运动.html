@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>多物体运动</title>
+		<title>物体多属性运动</title>
 
 		<!-- Date: 2014-05-08 -->
 		<script type="text/javascript" src="../js/move.js"></script>
@@ -21,16 +21,15 @@
 		<script type="text/javascript">
 			window.onload = function() {
 				var div = document.getElementById('div1');
-				var action = new MoveAction(div);
 				div.onmousemove = function() {
-					action.move('width', 300, function(){
-						action.move('height', 300);
+					startMove(div,{"width": 300},function(){
+							startMove(div,{"height":50});
 					});
 				};
 				
 				div.onmouseout = function() {
-					action.move('height', 20, function(){
-						action.move('width', 150);
+					startMove(div,{"height":20},function(){
+							startMove(div,{"width": 150});
 					});
 				};
 			};
