@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>物体运动基础</title>
+		<script type="text/javascript" src="../js/rookieMove.js"></script>
+		<!-- Date: 2014-05-08 -->
+		<style type="text/css">
+			div {
+				background-color:red;
+				width:150px;
+				position: absolute;
+				height:100px;
+				top:100px;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+
+
+				var btn = document.getElementById('btn');
+				btn.onclick = function(){
+					var oDiv = document.getElementById('div1');
+
+					startMove(oDiv, {'width': 160,'height': 300}, function(){
+						startMove(oDiv, {'opacity': 30});
+					});
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<input type="button" value="start" id='btn'/>
+
+		<div id="div1"> </div>
+	</body>
+</html>
+
