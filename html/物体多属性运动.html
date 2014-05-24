@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>物体多属性运动</title>
+
+		<!-- Date: 2014-05-08 -->
+		<script type="text/javascript" src="../js/move.js"></script>
+		<style type="text/css">
+			div {
+				background-color:red;
+				width:150px;
+				height:20px;
+				margin-top:10px;
+				filter:alpha(opacity=30);
+				opacity:0.3;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function() {
+				var div = document.getElementById('div1');
+				div.onmousemove = function() {
+					startMove(div,{"width": 300},function(){
+							startMove(div,{"height":50});
+					});
+				};
+				
+				div.onmouseout = function() {
+					startMove(div,{"height":20},function(){
+							startMove(div,{"width": 150});
+					});
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div id="div1"> </div>
+	</body>
+</html>
+
